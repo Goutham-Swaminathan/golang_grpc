@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "grpc_tutorial/pb";
+
+message User {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message UserByIdPayload {
+    int32 id = 1;
+}
+
+message AllUsersPayload {
+    User user = 1;
+}
+
+message UserPayload {
+    User user = 1;
+}
+
+message UserResponse {
+    User user = 1;
+}
+
+service UserService {
+    rpc GetUserById(UserByIdPayload) returns (UserResponse);
+    rpc GetAllUsers(AllUsersPayload) returns (stream UserResponse);
+    rpc Save(UserPayload) returns (UserResponse);
+    rpc SaveAll(stream UserPayload) returns (stream UserResponse);
+}
